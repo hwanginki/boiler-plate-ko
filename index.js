@@ -2,14 +2,17 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const port = 5000
-const { User } = require("./models/User");
+
+const config = require('./config/key')
+
+const { User } = require("./User");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(bodyParser.json());
 
-const monggose = require('mongoose')
-monggose.connect('mongodb+srv://hwang:hwang1234@cluster0.rtuca.mongodb.net/test?retryWrites=true&w=majority', {
+const mongoose = require('mongoose')
+mongoose.connect(config.mongoURI, {
     useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => console.log('MongoDB Connected...!!!'))
     .catch(err => console.log(err + "에러남"))
